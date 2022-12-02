@@ -1,0 +1,9 @@
+(function(window,$){"use strict";var $window,$document,$body,$html,$bodhtml;window.AA_CONFIG=window.AA_CONFIG||{};window.AA_CONFIG=$.extend({animationLength:750,easingFunction:'linear',scrollOffset:0},window.AA_CONFIG);$(document).ready(function(){$window=$(window);$document=$(this);$body=$(document.body);$html=$(document.documentElement);$bodhtml=$body.add($html);scrollToHash();$document.find('a[href^="#"], a[href^="."]').on('click',function(){var href=$(this).attr('href');if(href.charAt(0)==='.'){href=href.split('#');href.shift();href='#'+href.join('#');}
+if(href===location.hash)
+scrollToHash(href)})
+$window.on('hashchange',function(){scrollToHash();})
+$window.on('mousewheel DOMMouseScroll touchstart mousedown MSPointerDown',function(ev){$bodhtml.stop(true,false);});})
+function scrollToHash(rawHash){var rawHash=rawHash||location.hash;var anchorTuple=rawHash.substring(1).split("|");var hash=anchorTuple[0];var animationTime=anchorTuple[1]||window.AA_CONFIG.animationLength;try{if(hash.charAt(0).search(/[A-Za-z]/)>-1)
+var $actualID=$document.find("#"+hash);var $actualAnchor=$document.find('a[name="'+hash+'"]');if(($actualAnchor&&$actualAnchor.length)||($actualID&&$actualID.length))
+return;var $arbitraryAnchor=$(hash).first();if($arbitraryAnchor&&$arbitraryAnchor.length){var $el=$arbitraryAnchor;}else{return;}
+if($el&&$el.length){var top=$el.offset().top-window.AA_CONFIG.scrollOffset;$bodhtml.stop(true,false).animate({scrollTop:top},parseInt(animationTime),window.AA_CONFIG.easingFunction);}}catch(err){}}})(window,jQuery);
